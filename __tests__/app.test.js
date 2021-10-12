@@ -10,6 +10,7 @@ describe('alchemy-app routes', () => {
 
   it('should return proper username and avatar', async () => {
     const res = await request(app).get('/api/v1/auth/login');
+    // console.log('HELLLOOO', res.body);
 
     expect(res.body).toEqual({
       username: expect.any(String),
