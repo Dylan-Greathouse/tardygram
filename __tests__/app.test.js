@@ -8,6 +8,15 @@ describe('alchemy-app routes', () => {
     return setup(pool);
   });
 
+  it('should return proper username and avatar', async () => {
+    const res = await request(app).get('/api/v1/auth/login');
+
+    expect(res.body).toEqual({
+      username: expect.any(String),
+      avatar: expect.any(String),
+    });
+  });
+
   afterAll(() => {
     pool.end();
   });
