@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS grams CASCADE;
--- DROP TABLE IF EXISTS comments CASCADE;
+DROP TABLE IF EXISTS comments;
 
 CREATE TABLE users (
 github_login TEXT NOT NULL PRIMARY KEY,
@@ -15,13 +15,13 @@ caption TEXT NOT NULL,
 tags TEXT 
 );
 
--- CREATE TABLE comments (
--- id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
--- comment_by TEXT NOT NULL,
--- FOREIGN KEY (comment_by) REFERENCES users(github_login),
--- post TEXT NOT NULL,
--- FOREIGN KEY (post) REFERENCES grams(id),
--- comment TEXT NOT NULL
--- );
+CREATE TABLE comments (
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+comment_by TEXT NOT NULL,
+original_post TEXT NOT NULL,
+comment TEXT NOT NULL,
+FOREIGN KEY (comment_by) REFERENCES users(github_login)
+-- FOREIGN KEY (original_post) REFERENCES grams(id)
+);
 
 INSERT INTO users (github_login, github_avatar_url) VALUES ('test-github', 'image.png')

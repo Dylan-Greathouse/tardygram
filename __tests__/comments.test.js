@@ -1,22 +1,21 @@
+
 const pool = require('../lib/utils/pool.js');
 const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
-const UserService = require('../lib/service/UserService.js');
 const User = require('../lib/Models/User.js');
-const { agent } = require('superagent');
 
-const testPost = {
-  photo: 'photo.jpg',
-  caption: 'sure is a photo',
-  tags: ['#photography', '#myphotos'],
+const testComment = {
+  user: 'test-user',
+  post: 'original-post',
+  comment: 'commenting',
 };
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
     req.user = {
-      username: 'test-user',
-      avatar: 'image.png',
+      username: 'Dylan-Greathouse',
+      avatar: 'https://avatars.githubusercontent.com/u/20326640?v=4',
       iat: Date.now(),
       exp: Date.now(),
     };
@@ -25,12 +24,14 @@ jest.mock('../lib/middleware/ensureAuth.js', () => {
   };
 });
 
+
 describe('alchemy-app routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
 
-  it('should create a post from a user', async () => {
+
+  it('should create a comment from a user', async () => {
     const user = await User.insert({
       username: 'test-user',
       avatar: 'image.png',
