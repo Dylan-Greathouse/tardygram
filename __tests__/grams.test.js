@@ -6,6 +6,10 @@ const UserService = require('../lib/service/UserService.js');
 const User = require('../lib/Models/User.js');
 const { agent } = require('superagent');
 
+
+
+
+
 const testPost = {
   photo: 'photo.jpg',
   caption: 'sure is a photo',
@@ -52,6 +56,11 @@ describe('alchemy-app routes', () => {
       photo: 'photo.jpg',
       caption: 'sure is a photo',
     });
+  });
+
+
+  it('get all posts from grams tables', async() => {
+    return request(app);
   });
 
   afterAll(() => {
