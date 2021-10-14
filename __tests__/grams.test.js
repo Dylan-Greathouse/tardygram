@@ -24,7 +24,7 @@ describe('alchemy-app routes', () => {
     return setup(pool);
   });
 
-  it('should create a post from a user', async () => {
+  it.skip('should create a post from a user', async () => {
     const user = await User.insert({ username:'test-github-two', avatar:'image.png' });
 
     const res = await request(app)
