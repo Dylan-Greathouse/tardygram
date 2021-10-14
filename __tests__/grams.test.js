@@ -2,6 +2,7 @@ const pool = require('../lib/utils/pool.js');
 const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
+const { agent } = require('superagent');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -21,13 +22,22 @@ describe('alchemy-app routes', () => {
     return setup(pool);
   });
 
-  it('should return user testing ensureAuth at /verify using mock', async () => {
-    const res = await request(app).get('/api/v1/auth/verify');
-    expect(res.body).toEqual({
+  it('should create a post from a user', async () => {
+    const res = await request(app).post('/api/v1/grams').send({
       username: 'Dylan-Greathouse',
-      avatar: 'https://avatars.githubusercontent.com/u/20326640?v=4',
-      iat: expect.any(Number),
-      exp: expect.any(Number),
+      photo:
+        'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
+      caption: 'wow, what a picture',
+      tags: '#apicture #wow',
+    });
+
+    expect(res.body).toEqual({
+      id: '1',
+      username: 'Dylan-Greathouse',
+      photo:
+        'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
+      caption: 'wow, what a picture',
+      tags: '#apicture #wow',
     });
   });
 
