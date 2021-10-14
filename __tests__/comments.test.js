@@ -5,6 +5,7 @@ const request = require('supertest');
 const app = require('../lib/app.js');
 const User = require('../lib/Models/User.js');
 
+
 async function savePosts(){
   const testPost = [{
     photo: 'photo.jpg',
@@ -18,14 +19,9 @@ async function savePosts(){
   );
 }
 
-const testPost = {
-  photo: 'photo.jpg',
-  caption: 'sure is a photo',
-  tags: ['#photography', '#myphotos'],
-};
 
 const testComment = {
-  user: 'test-user',
+  username: 'test-user',
   post: 'original-post',
   comment: 'commenting',
 };
@@ -51,25 +47,25 @@ describe('alchemy-app routes', () => {
 
 
   it('should create a comment from a user', async () => {
-    const user = await User.insert({
-      username: 'test-user',
-      avatar: 'image.png',
-    });
+    await savePosts();
+    // const user = await User.insert({
+    //   username: 'test-user',
+    //   avatar: 'image.png',
+    // });
 
-    const agent = await request.agent(app);
-    await agent.get('/api/v1/auth/login').send({
-      username: 'test-user',
-      avatar: 'image.png',
-    });
+    // const agent = await request.agent(app);
+    // await agent.get('/api/v1/auth/login').send({
+    //   username: 'test-user',
+    //   avatar: 'image.png',
+    // });
 
-    const resPost = await agent
-      .post('/api/v1/grams')
-      .send({ ...testPost, username: user.id });
-    
+    // const resPost = await agent
+    //   .post('/api/v1/grams')
+    //   .send({ ...testPost, username: user.id });
 
-    const res = await agent
-      .post('/api/v1/grams')
-      .send({...resPost, comment: testComment.});
+    const res = await request(app)
+      .post('/api/v1/comments')
+      .send(testComment);
 
     expect(res.body).toEqual({
       id: '1',
