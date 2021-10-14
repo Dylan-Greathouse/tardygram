@@ -14,21 +14,14 @@ username TEXT NOT NULL,
 FOREIGN KEY (username) REFERENCES users(github_login),
 photo_url TEXT NOT NULL,
 caption TEXT NOT NULL,
-tags TEXT 
+tags TEXT[]
 );
 
-CREATE TABLE comments (
-id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-comment_by TEXT NOT NULL,
-FOREIGN KEY (comment_by) REFERENCES users(github_login),
-post TEXT NOT NULL,
-FOREIGN KEY (post) REFERENCES grams(id),
-comment TEXT NOT NULL
-);
-
-CREATE TABLE tags (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    tag TEXT,
-    grams_id BIGINT NOT NULL,
-  FOREIGN KEY (grams_id) references grams(id)
-);
+-- CREATE TABLE comments (
+-- id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+-- comment_by TEXT NOT NULL,
+-- FOREIGN KEY (comment_by) REFERENCES users(github_login),
+-- post TEXT NOT NULL,
+-- FOREIGN KEY (post) REFERENCES grams(id),
+-- comment TEXT NOT NULL
+-- );
