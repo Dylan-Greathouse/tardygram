@@ -2,6 +2,7 @@ const pool = require('../lib/utils/pool.js');
 const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
+const { agent } = require('superagent');
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -22,7 +23,7 @@ describe('alchemy-app routes', () => {
   });
 
   it('should create a post from a user', async () => {
-    const res = await request(app).post('/api/v1/auth/posts').send({
+    const res = await request(app).post('/api/v1/grams').send({
       username: 'Dylan-Greathouse',
       photo:
         'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
