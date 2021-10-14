@@ -12,7 +12,7 @@ id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 username TEXT NOT NULL,
 photo_url TEXT NOT NULL,
 caption TEXT NOT NULL,
-FOREIGN KEY (username) REFERENCES users(github_login)
+tags TEXT 
 );
 
 -- CREATE TABLE comments (
