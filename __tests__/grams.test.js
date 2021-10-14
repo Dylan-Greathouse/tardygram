@@ -2,7 +2,9 @@ const pool = require('../lib/utils/pool.js');
 const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
-const { agent } = require('superagent');
+const UserService = require('../lib/service/UserService.js');
+const User = require('../lib/Models/User.js');
+
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
@@ -23,19 +25,23 @@ describe('alchemy-app routes', () => {
   });
 
   it('should create a post from a user', async () => {
-    const res = await request(app).post('/api/v1/grams').send({
-      username: 'Dylan-Greathouse',
-      photo:
-        'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
-      caption: 'wow, what a picture',
-      tags: '#apicture #wow',
-    });
+    const req = await User.insert({ username:'Dylan-Greathouse', avatar:'https://avatars.githubusercontent.com/u/20326640?v=4' });
+
+    const res = await request(app)
+      .post('/api/v1/auth/grams/posts')
+      .send({
+        // username: req.user,
+        photo: 'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
+        caption: 'wow, what a picture',
+        tags: '#apicture #wow',
+      });
+
+    console.log('AT POST TEST', res.body);
 
     expect(res.body).toEqual({
       id: '1',
-      username: 'Dylan-Greathouse',
-      photo:
-        'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
+      username: req.user,
+      photo_url: 'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
       caption: 'wow, what a picture',
       tags: '#apicture #wow',
     });
