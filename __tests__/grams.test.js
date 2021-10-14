@@ -4,13 +4,19 @@ const request = require('supertest');
 const app = require('../lib/app.js');
 const UserService = require('../lib/service/UserService.js');
 const User = require('../lib/Models/User.js');
+const { agent } = require('superagent');
 
+const testPost = {
+  photo: 'photo.jpg',
+  caption: 'sure is a photo',
+  tags: ['#photography', '#myphotos'],
+};
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
     req.user = {
-      username: 'Dylan-Greathouse',
-      avatar: 'https://avatars.githubusercontent.com/u/20326640?v=4',
+      username: 'test-user',
+      avatar: 'image.png',
       iat: Date.now(),
       exp: Date.now(),
     };
@@ -25,25 +31,26 @@ describe('alchemy-app routes', () => {
   });
 
   it('should create a post from a user', async () => {
-    const req = await User.insert({ username:'Dylan-Greathouse', avatar:'https://avatars.githubusercontent.com/u/20326640?v=4' });
+    const user = await User.insert({
+      username: 'test-user',
+      avatar: 'image.png',
+    });
 
-    const res = await request(app)
-      .post('/api/v1/auth/grams/posts')
-      .send({
-        // username: req.user,
-        photo: 'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
-        caption: 'wow, what a picture',
-        tags: '#apicture #wow',
-      });
+    const agent = await request.agent(app);
+    await agent.get('/api/v1/auth/login').send({
+      username: 'test-user',
+      avatar: 'image.png',
+    });
 
-    console.log('AT POST TEST', res.body);
+    const res = await agent
+      .post('/api/v1/grams')
+      .send({ ...testPost, username: user.id });
 
     expect(res.body).toEqual({
-      id: '1',
-      username: req.user,
-      photo_url: 'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
-      caption: 'wow, what a picture',
-      tags: '#apicture #wow',
+      username: 'test-user',
+      photo: 'photo.jpg',
+      caption: 'sure is a photo',
+      tags: ['#photography', '#myphotos'],
     });
   });
 
