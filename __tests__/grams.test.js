@@ -51,6 +51,7 @@ describe('alchemy-app routes', () => {
       username: 'test-user',
       photo: 'photo.jpg',
       caption: 'sure is a photo',
+      tags: ['#photography', '#myphotos'],
     });
   });
 
