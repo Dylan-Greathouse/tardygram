@@ -5,6 +5,25 @@ const request = require('supertest');
 const app = require('../lib/app.js');
 const User = require('../lib/Models/User.js');
 
+async function savePosts(){
+  const testPost = [{
+    photo: 'photo.jpg',
+    caption: 'sure is a photo',
+    tags: ['#photography', '#myphotos'],
+  }];
+  await Promise.all(
+    testPost.map(async (arr) => {
+      await request(app).post('/api/v1/grams').send(arr);
+    })
+  );
+}
+
+const testPost = {
+  photo: 'photo.jpg',
+  caption: 'sure is a photo',
+  tags: ['#photography', '#myphotos'],
+};
+
 const testComment = {
   user: 'test-user',
   post: 'original-post',
@@ -43,15 +62,20 @@ describe('alchemy-app routes', () => {
       avatar: 'image.png',
     });
 
-    const res = await agent
+    const resPost = await agent
       .post('/api/v1/grams')
       .send({ ...testPost, username: user.id });
+    
+
+    const res = await agent
+      .post('/api/v1/grams')
+      .send({...resPost, comment: testComment.});
 
     expect(res.body).toEqual({
       id: '1',
       username: 'test-user',
-      photo: 'photo.jpg',
-      caption: 'sure is a photo',
+      post: '1',
+      comment: 'commenting'
     });
   });
 

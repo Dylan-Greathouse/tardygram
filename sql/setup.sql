@@ -18,10 +18,10 @@ tags TEXT
 CREATE TABLE comments (
 id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 comment_by TEXT NOT NULL,
+FOREIGN KEY (comment_by) REFERENCES users(github_login),
 original_post TEXT NOT NULL,
-comment TEXT NOT NULL,
-FOREIGN KEY (comment_by) REFERENCES users(github_login)
--- FOREIGN KEY (original_post) REFERENCES grams(id)
+-- FOREIGN KEY (original_post) REFERENCES grams(id),
+comment TEXT NOT NULL
 );
 
 INSERT INTO users (github_login, github_avatar_url) VALUES ('test-github', 'image.png')
