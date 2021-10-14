@@ -4,7 +4,23 @@ const request = require('supertest');
 const app = require('../lib/app.js');
 const User = require('../lib/Models/User.js');
 
-
+async function savePosts(){
+  const testPost = [{
+    photo: 'photo.jpg',
+    caption: 'sure is a photo',
+    tags: ['#photography', '#myphotos'],
+  },
+  {
+    photo: 'image.jpg',
+    caption: 'sure is a image',
+    tags: ['#wow', '#sogood'],
+  }];
+  await Promise.all(
+    testPost.map(async (arr) => {
+      await request(app).post('/api/v1/grams').send(arr);
+    })
+  );
+}
 
 
 
@@ -59,7 +75,26 @@ describe('alchemy-app routes', () => {
 
 
   it('get all posts from grams tables', async() => {
-    return request(app);
+    await savePosts();
+    const res = await request(app)
+      .get('/api/v1/grams');
+
+    expect(res.body).toEqual([{
+      id: '1',
+      photo: 'photo.jpg',
+      caption: 'sure is a photo',
+      tags: ['#photography', '#myphotos'],
+      username: 'test-user'
+
+    },
+    {
+      id: '2',
+      photo: 'image.jpg',
+      caption: 'sure is a image',
+      tags: ['#wow', '#sogood'],
+      username: 'test-user'
+
+    }]);
   });
 
   afterAll(() => {
