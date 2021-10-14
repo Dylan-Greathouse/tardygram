@@ -9,7 +9,7 @@ const User = require('../lib/Models/User.js');
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
     req.user = {
-      username: 'test-github-two',
+      username: 'test-github',
       avatar: 'image.png',
       iat: Date.now(),
       exp: Date.now(),
@@ -24,26 +24,29 @@ describe('alchemy-app routes', () => {
     return setup(pool);
   });
 
-  it.skip('should create a post from a user', async () => {
-    const user = await User.insert({ username:'test-github-two', avatar:'image.png' });
+  it('should create a post from a user', async () => {
+    
+    const agent = request.agent(app);
 
-    const res = await request(app)
-      .post('/grams')
+    await agent.get('/api/v1/auth/login/callback');
+
+    const res = await agent
+      .post('/post')
       .send({
         // username: 'test-github',
         photo: 'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
         caption: 'wow, what a picture',
-        // tags: '#apicture #wow',
+        tags: '#apicture #wow',
       });
 
     console.log('AT POST TEST', res.body);
 
     expect(res.body).toEqual({
       id: '1',
-      username: user.username,
+      username: 'test-github',
       photo: 'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
       caption: 'wow, what a picture',
-      // tags: '#apicture #wow',
+      tags: '#apicture #wow',
     });
   });
 
