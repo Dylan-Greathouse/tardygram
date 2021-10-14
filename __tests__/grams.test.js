@@ -2,9 +2,11 @@ const pool = require('../lib/utils/pool.js');
 const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
-const UserService = require('../lib/service/UserService.js');
 const User = require('../lib/Models/User.js');
-const { agent } = require('superagent');
+
+
+
+
 
 const testPost = {
   photo: 'photo.jpg',
@@ -51,7 +53,13 @@ describe('alchemy-app routes', () => {
       username: 'test-user',
       photo: 'photo.jpg',
       caption: 'sure is a photo',
+      tags: ['#photography', '#myphotos'],
     });
+  });
+
+
+  it('get all posts from grams tables', async() => {
+    return request(app);
   });
 
   afterAll(() => {
