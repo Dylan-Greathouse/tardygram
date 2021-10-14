@@ -2,14 +2,18 @@ const pool = require('../lib/utils/pool.js');
 const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
-const UserService = require('../lib/service/UserService.js');
 const User = require('../lib/Models/User.js');
 
+const testPost = {
+  photo: 'photo.jpg',
+  caption: 'sure is a photo',
+  tags: ['#photography', '#myphotos'],
+};
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
     req.user = {
-      username: 'test-github-two',
+      username: 'test-user',
       avatar: 'image.png',
       iat: Date.now(),
       exp: Date.now(),
@@ -24,26 +28,28 @@ describe('alchemy-app routes', () => {
     return setup(pool);
   });
 
-  it.skip('should create a post from a user', async () => {
-    const user = await User.insert({ username:'test-github-two', avatar:'image.png' });
+  it('should create a post from a user', async () => {
+    const user = await User.insert({
+      username: 'test-user',
+      avatar: 'image.png',
+    });
 
-    const res = await request(app)
-      .post('/grams')
-      .send({
-        // username: 'test-github',
-        photo: 'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
-        caption: 'wow, what a picture',
-        // tags: '#apicture #wow',
-      });
+    const agent = await request.agent(app);
+    await agent.get('/api/v1/auth/login').send({
+      username: 'test-user',
+      avatar: 'image.png',
+    });
 
-    console.log('AT POST TEST', res.body);
+    const res = await agent
+      .post('/api/v1/grams')
+      .send({ ...testPost, username: user.id });
 
     expect(res.body).toEqual({
       id: '1',
-      username: user.username,
-      photo: 'https://images.fineartamerica.com/images/artworkimages/medium/2/cool-t-rex-filip-hellman-transparent.png',
-      caption: 'wow, what a picture',
-      // tags: '#apicture #wow',
+      username: 'test-user',
+      photo: 'photo.jpg',
+      caption: 'sure is a photo',
+      tags: ['#photography', '#myphotos'],
     });
   });
 
