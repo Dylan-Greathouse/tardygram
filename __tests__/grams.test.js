@@ -4,6 +4,10 @@ const request = require('supertest');
 const app = require('../lib/app.js');
 const User = require('../lib/Models/User.js');
 
+
+
+
+
 const testPost = {
   photo: 'photo.jpg',
   caption: 'sure is a photo',
@@ -51,6 +55,11 @@ describe('alchemy-app routes', () => {
       caption: 'sure is a photo',
       tags: ['#photography', '#myphotos'],
     });
+  });
+
+
+  it('get all posts from grams tables', async() => {
+    return request(app);
   });
 
   afterAll(() => {
