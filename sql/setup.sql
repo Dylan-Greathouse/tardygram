@@ -13,7 +13,7 @@ username TEXT NOT NULL,
 FOREIGN KEY (username) REFERENCES users(github_login),
 photo_url TEXT NOT NULL,
 caption TEXT NOT NULL,
-tags TEXT NOT NULL
+tags TEXT 
 );
 
 -- CREATE TABLE comments (

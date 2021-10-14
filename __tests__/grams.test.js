@@ -47,10 +47,10 @@ describe('alchemy-app routes', () => {
       .send({ ...testPost, username: user.id });
 
     expect(res.body).toEqual({
+      id: '1',
       username: 'test-user',
       photo: 'photo.jpg',
       caption: 'sure is a photo',
-      tags: ['#photography', '#myphotos'],
     });
   });
 
