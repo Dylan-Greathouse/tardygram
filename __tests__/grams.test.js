@@ -99,6 +99,14 @@ describe('alchemy-app routes', () => {
     ]);
   });
 
+  it('get post by id from grams tables', async () => {
+    await savePosts();
+    const res = await request(app).get('/api/v1/grams/1');
+
+
+    expect(res.body).toEqual();
+  });
+
     
   it('should return the 10 posts with the most comments', async () => {
     const user = await User.insert({
