@@ -335,21 +335,14 @@ describe('alchemy-app routes', () => {
 
     const res = await request(app).get('/api/v1/grams/popular');
     console.log('OOOMMMGGG', res.body);
-    expect(res.body).toEqual(
-      // expect.arrayContaining(
-      //   [
-      //   // post1,
-      //   // post2
-      //   // // post3,
-      //   // post4,
-      //   // post5,
-      //   // post6,
-      //   // post7,
-      //   // post8,
-      //   // post9,
-      //   // post10,
-      // ]
-      // )
+    expect(res.body).toEqual(     
+      [{
+        id: '1',
+        username: 'test-github',
+        caption: 'words-here',
+        photo: 'gram.png',
+        tags:['#photography', '#myphotos'],
+      }]
     );
   });
 });
