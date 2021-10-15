@@ -182,6 +182,17 @@ describe('alchemy-app routes', () => {
 
   });
 
+  it('removes a post by id', async () => {
+    await saveUser();
+    await savePosts();
+    await saveComments();
+
+    const res = await request(app)
+      .delete('/api/v1/grams/1');
+    expect(res.body).toEqual({});
+
+  });
+
     
   it.skip('should return the 10 posts with the most comments', async () => {
     const user = await User.insert({
