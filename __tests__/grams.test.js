@@ -6,6 +6,20 @@ const User = require('../lib/Models/User.js');
 const Post = require('../lib/Models/Post.js');
 const Comment = require('../lib/Models/Comment.js');
 
+async function saveUser() {
+  const testUser = [{
+    username: 'test-github',
+    avatar: 'image.png'
+  }];
+  await Promise.all(
+    testUser.map(async (arr) => {
+      await request(app)
+        .get('/api/v1/auth/login/callback')
+        .send(arr);
+    })
+  );
+}
+
 async function savePosts() {
   const testPost = [
     {
@@ -25,6 +39,27 @@ async function savePosts() {
     })
   );
 }
+
+async function saveComments() {
+  const testComment = [
+    {
+      comment: '10/10',
+      post: '1',
+      username: 'test-github',
+    },
+    {
+      comment: '7/10',
+      post: '1',
+      username: 'test-github',
+    },
+  ];
+  await Promise.all(
+    testComment.map(async (arr) => {
+      await request(app).post('/api/v1/comments').send(arr);
+    })
+  );
+}
+
 
 const testPost = {
   photo: 'photo.jpg',
@@ -80,25 +115,49 @@ describe('alchemy-app routes', () => {
     await savePosts();
     const res = await request(app).get('/api/v1/grams');
 
-    expect(res.body).toEqual([
-      {
-        id: '1',
-        photo: 'photo.jpg',
-        caption: 'sure is a photo',
-        tags: ['#photography', '#myphotos'],
-        username: 'test-user',
-      },
-      {
-        id: '2',
-        photo: 'image.jpg',
-        caption: 'sure is a image',
-        tags: ['#wow', '#sogood'],
-        username: 'test-user',
-      },
+
+    expect(res.body).toEqual([{
+      id: '1',
+      photo: 'gram.png',
+      caption: 'words-here',
+      tags: ['#photography', '#myphotos'],
+      username: 'test-github'
+
+    },
+    {
+      id: '2',
+      photo: 'gram.png',
+      caption: 'words-here',
+      tags: ['#wow', '#sogood'],
+      username: 'test-github',
+    }
     ]);
   });
 
-  it('should return the 10 posts with the most comments', async () => {
+  it('get post by id from grams tables', async () => {
+    await saveUser();
+    await savePosts();
+    await saveComments();
+    const res = await request(app).get('/api/v1/grams/1');
+
+
+    expect(res.body).toEqual({
+      id: '1',
+      username: 'test-github',
+      photo: 'gram.png',
+      caption: 'words-here',
+      tags: ['#photography', '#myphotos'],
+      comments: [{
+        id: '1',
+        comment_by: 'test-github',
+        original_post: '1',
+        comment: 'comment-here'
+      }]
+    });
+  });
+
+    
+  it.skip('should return the 10 posts with the most comments', async () => {
     const user = await User.insert({
       username: 'test-user',
       avatar: 'image.png',
@@ -249,8 +308,8 @@ describe('alchemy-app routes', () => {
       ])
     );
   });
+});
 
-  afterAll(() => {
-    pool.end();
-  });
+afterAll(() => {
+  pool.end();
 });
