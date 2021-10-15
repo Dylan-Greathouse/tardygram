@@ -12,6 +12,7 @@ github_avatar_url TEXT NOT NULL
 CREATE TABLE grams (
 id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 username TEXT NOT NULL,
+FOREIGN KEY (username) REFERENCES users(github_login),
 photo_url TEXT NOT NULL,
 caption TEXT NOT NULL,
 tags TEXT[]
