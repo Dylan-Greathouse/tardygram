@@ -156,6 +156,32 @@ describe('alchemy-app routes', () => {
     });
   });
 
+  it('patches a post by id requiring auth and only caption can be updated', async () => {
+    await saveUser();
+    await savePosts();
+    await saveComments();
+
+
+    const res = await request(app)
+      .patch('/api/v1/grams/1')
+      .send({
+        id: '1',
+        username: 'test-github',
+        photo: 'gram.png',
+        caption: 'more-words-here',
+        tags: ['#photography', '#myphotos']
+      });
+
+    expect(res.body).toEqual({
+      id: '1',
+      username: 'test-github',
+      photo: 'gram.png',
+      caption: 'more-words-here',
+      tags: ['#photography', '#myphotos']
+    });
+
+  });
+
     
   it.skip('should return the 10 posts with the most comments', async () => {
     const user = await User.insert({
