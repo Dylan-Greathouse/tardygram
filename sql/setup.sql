@@ -23,7 +23,7 @@ CREATE TABLE comments (
 id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 comment_by TEXT NOT NULL,
 FOREIGN KEY (comment_by) REFERENCES users(github_login),
-original_post BIGINT,
+original_post BIGINT NOT NULL,
 FOREIGN KEY (original_post) REFERENCES grams(id),
 comment TEXT NOT NULL
 );
