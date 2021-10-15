@@ -12,6 +12,7 @@ github_avatar_url TEXT NOT NULL
 CREATE TABLE grams (
 id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 username TEXT NOT NULL,
+FOREIGN KEY (username) REFERENCES users(github_login),
 photo_url TEXT NOT NULL,
 caption TEXT NOT NULL,
 tags TEXT[]
@@ -28,4 +29,9 @@ comment TEXT NOT NULL
 );
 
 
-INSERT INTO users (github_login, github_avatar_url) VALUES ('test-github', 'image.png')
+INSERT INTO users (github_login, github_avatar_url) 
+VALUES ('test-github', 'image.png');
+
+INSERT INTO grams (username, photo_url, caption)
+VALUES ('test-github', 'gram.png', 'words-here')
+
