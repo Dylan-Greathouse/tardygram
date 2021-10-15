@@ -80,6 +80,16 @@ describe('alchemy-app routes', () => {
     });
   });
 
+  it('should delete comment from DB', async () => {
+    await saveUser();
+    await savePosts();
+
+    const res = await request(app)
+      .delete('/api/v1/comments/1');
+
+    expect(res.body).toEqual({});
+  });
+
   afterAll(() => {
     pool.end();
   });
