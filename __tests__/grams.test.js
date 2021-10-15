@@ -138,7 +138,8 @@ describe('alchemy-app routes', () => {
     await saveUser();
     await savePosts();
     await saveComments();
-    const res = await request(app).get('/api/v1/grams/1');
+    const res = await request(app)
+      .get('/api/v1/grams/1');
 
 
     expect(res.body).toEqual({
@@ -194,159 +195,160 @@ describe('alchemy-app routes', () => {
   });
 
     
-  it.skip('should return the 10 posts with the most comments', async () => {
-    const user = await User.insert({
-      username: 'test-user',
-      avatar: 'image.png',
-    });
+  //   it.skip('should return the 10 posts with the most comments', async () => {
+  //     const user = await User.insert({
+  //       username: 'test-user',
+  //       avatar: 'image.png',
+  //     });
 
-    const post1 = await Post.insert({
-      username: user.id,
-      photo: 'photo.gif',
-      caption: 'a caption',
-      tags: ['#tags'],
-    });
+  //     const post1 = await Post.insert({
+  //       username: user.id,
+  //       photo: 'photo.gif',
+  //       caption: 'a caption',
+  //       tags: ['#tags'],
+  //     });
 
-    await Comment.insert({
-      username: user.id,
-      post: post1.id,
-      comment: 'a comment',
-    });
-    const post2 = await Post.insert({
-      username: user.id,
-      photo: 'photo.gif',
-      caption: 'a caption',
-      tags: ['#tags'],
-    });
+  //     await Comment.insert({
+  //       username: user.id,
+  //       post: post1.id,
+  //       comment: 'a comment',
+  //     });
+  //     const post2 = await Post.insert({
+  //       username: user.id,
+  //       photo: 'photo.gif',
+  //       caption: 'a caption',
+  //       tags: ['#tags'],
+  //     });
 
-    await Comment.insert({
-      username: user.id,
-      post: post2.id,
-      comment: 'a comment',
-    });
+  //     await Comment.insert({
+  //       username: user.id,
+  //       post: post2.id,
+  //       comment: 'a comment',
+  //     });
 
-    const post3 = await Post.insert({
-      username: user.id,
-      photo: 'photo.gif',
-      caption: 'a caption',
-      tags: ['#tags'],
-    });
+  //     const post3 = await Post.insert({
+  //       username: user.id,
+  //       photo: 'photo.gif',
+  //       caption: 'a caption',
+  //       tags: ['#tags'],
+  //     });
 
-    await Comment.insert({
-      username: user.id,
-      post: post3.id,
-      comment: 'a comment',
-    });
+  //     await Comment.insert({
+  //       username: user.id,
+  //       post: post3.id,
+  //       comment: 'a comment',
+  //     });
 
-    const post4 = await Post.insert({
-      username: user.id,
-      photo: 'photo.gif',
-      caption: 'a caption',
-      tags: ['#tags'],
-    });
+  //     const post4 = await Post.insert({
+  //       username: user.id,
+  //       photo: 'photo.gif',
+  //       caption: 'a caption',
+  //       tags: ['#tags'],
+  //     });
 
-    await Comment.insert({
-      username: user.id,
-      post: post4.id,
-      comment: 'a comment',
-    });
+  //     await Comment.insert({
+  //       username: user.id,
+  //       post: post4.id,
+  //       comment: 'a comment',
+  //     });
 
-    const post5 = await Post.insert({
-      username: user.id,
-      photo: 'photo.gif',
-      caption: 'a caption',
-      tags: ['#tags'],
-    });
+  //     const post5 = await Post.insert({
+  //       username: user.id,
+  //       photo: 'photo.gif',
+  //       caption: 'a caption',
+  //       tags: ['#tags'],
+  //     });
 
-    await Comment.insert({
-      username: user.id,
-      post: post5.id,
-      comment: 'a comment',
-    });
+  //     await Comment.insert({
+  //       username: user.id,
+  //       post: post5.id,
+  //       comment: 'a comment',
+  //     });
 
-    const post6 = await Post.insert({
-      username: user.id,
-      photo: 'photo.gif',
-      caption: 'a caption',
-      tags: ['#tags'],
-    });
+  //     const post6 = await Post.insert({
+  //       username: user.id,
+  //       photo: 'photo.gif',
+  //       caption: 'a caption',
+  //       tags: ['#tags'],
+  //     });
 
-    await Comment.insert({
-      username: user.id,
-      post: post6.id,
-      comment: 'a comment',
-    });
+  //     await Comment.insert({
+  //       username: user.id,
+  //       post: post6.id,
+  //       comment: 'a comment',
+  //     });
 
-    const post7 = await Post.insert({
-      username: user.id,
-      photo: 'photo.gif',
-      caption: 'a caption',
-      tags: ['#tags'],
-    });
+  //     const post7 = await Post.insert({
+  //       username: user.id,
+  //       photo: 'photo.gif',
+  //       caption: 'a caption',
+  //       tags: ['#tags'],
+  //     });
 
-    await Comment.insert({
-      username: user.id,
-      post: post7.id,
-      comment: 'a comment',
-    });
+  //     await Comment.insert({
+  //       username: user.id,
+  //       post: post7.id,
+  //       comment: 'a comment',
+  //     });
 
-    const post8 = await Post.insert({
-      username: user.id,
-      photo: 'photo.gif',
-      caption: 'a caption',
-      tags: ['#tags'],
-    });
+  //     const post8 = await Post.insert({
+  //       username: user.id,
+  //       photo: 'photo.gif',
+  //       caption: 'a caption',
+  //       tags: ['#tags'],
+  //     });
 
-    await Comment.insert({
-      username: user.id,
-      post: post8.id,
-      comment: 'a comment',
-    });
+  //     await Comment.insert({
+  //       username: user.id,
+  //       post: post8.id,
+  //       comment: 'a comment',
+  //     });
 
-    const post9 = await Post.insert({
-      username: user.id,
-      photo: 'photo.gif',
-      caption: 'a caption',
-      tags: ['#tags'],
-    });
+  //     const post9 = await Post.insert({
+  //       username: user.id,
+  //       photo: 'photo.gif',
+  //       caption: 'a caption',
+  //       tags: ['#tags'],
+  //     });
 
-    await Comment.insert({
-      username: user.id,
-      post: post9.id,
-      comment: 'a comment',
-    });
+  //     await Comment.insert({
+  //       username: user.id,
+  //       post: post9.id,
+  //       comment: 'a comment',
+  //     });
 
-    const post10 = await Post.insert({
-      username: user.id,
-      photo: 'photo.gif',
-      caption: 'a caption',
-      tags: ['#tags'],
-    });
+  //     const post10 = await Post.insert({
+  //       username: user.id,
+  //       photo: 'photo.gif',
+  //       caption: 'a caption',
+  //       tags: ['#tags'],
+  //     });
 
-    await Comment.insert({
-      username: user.id,
-      post: post10.id,
-      comment: 'a comment',
-    });
+  //     await Comment.insert({
+  //       username: user.id,
+  //       post: post10.id,
+  //       comment: 'a comment',
+  //     });
 
-    const res = await request(app).get('/api/v1/grams/popular');
-    expect(res.body).toEqual(
-      expect.arrayContaining([
-        post1,
-        post2,
-        post3,
-        post4,
-        post5,
-        post6,
-        post7,
-        post8,
-        post9,
-        post10,
-      ])
-    );
+  //     const res = await request(app).get('/api/v1/grams/popular');
+  //     expect(res.body).toEqual(
+  //       expect.arrayContaining([
+  //         post1,
+  //         post2,
+  //         post3,
+  //         post4,
+  //         post5,
+  //         post6,
+  //         post7,
+  //         post8,
+  //         post9,
+  //         post10,
+  //       ])
+  //     );
+  //   });
+  // });
+
+  afterAll(() => {
+    pool.end();
   });
-});
-
-afterAll(() => {
-  pool.end();
 });
