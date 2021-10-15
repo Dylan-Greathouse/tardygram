@@ -34,6 +34,26 @@ async function savePosts(){
   );
 }
 
+async function saveComments() {
+  const testComment = [
+    {
+      comment: '10/10',
+      post: '1',
+      username: 'test-github',
+    },
+    {
+      comment: '7/10',
+      post: '1',
+      username: 'test-github',
+    },
+  ];
+  await Promise.all(
+    testComment.map(async (arr) => {
+      await request(app).post('/api/v1/comments').send(arr);
+    })
+  );
+}
+
 
 
 
@@ -83,6 +103,7 @@ describe('alchemy-app routes', () => {
   it('should delete comment from DB', async () => {
     await saveUser();
     await savePosts();
+    await saveComments();
 
     const res = await request(app)
       .delete('/api/v1/comments/1');
