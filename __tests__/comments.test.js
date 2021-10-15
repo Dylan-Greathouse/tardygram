@@ -105,6 +105,10 @@ describe('alchemy-app routes', () => {
     await savePosts();
     await saveComments();
 
+    console.log('SAVE USER', saveUser());
+    console.log('SAVE POSTS', savePosts());
+    console.log('SAVE COMMENT', saveComments());
+
     const res = await request(app)
       .delete('/api/v1/comments/1');
 
