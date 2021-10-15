@@ -65,12 +65,13 @@ describe('alchemy-app routes', () => {
       .send({ ...testPost, username: user.id });
 
     expect(res.body).toEqual({
-      id: '1',
+      id: '3',
       username: 'test-user',
       photo: 'photo.jpg',
       caption: 'sure is a photo',
       tags: ['#photography', '#myphotos'],
-    });
+    }
+    );
   });
 
 
@@ -81,20 +82,20 @@ describe('alchemy-app routes', () => {
 
     expect(res.body).toEqual([{
       id: '1',
-      photo: 'photo.jpg',
-      caption: 'sure is a photo',
+      photo: 'gram.png',
+      caption: 'words-here',
       tags: ['#photography', '#myphotos'],
-      username: 'test-user'
+      username: 'test-github'
 
     },
     {
       id: '2',
-      photo: 'image.jpg',
-      caption: 'sure is a image',
+      photo: 'gram.png',
+      caption: 'words-here',
       tags: ['#wow', '#sogood'],
-      username: 'test-user'
-
-    }]);
+      username: 'test-github',
+    }
+    ]);
   });
 
   afterAll(() => {
