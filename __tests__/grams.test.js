@@ -199,140 +199,7 @@ describe('alchemy-app routes', () => {
     await saveUser();
     await savePosts();
     await saveComments();
-    // const user = await User.insert({
-    //   username: 'test-user',
-    //   avatar: 'image.png',
-    // });
-
-    // const post1 = await Post.insert({
-    //   username: 'test-user',
-    //   photo: 'photo.gif',
-    //   caption: 'a caption',
-    //   tags: ['#tags'],
-    // });
-
-    // await Comment.insert({
-    //   comment_by: 'test-user',
-    //   post: post1.id,
-    //   comment: 'a comment',
-    // });
-    // const post2 = await Post.insert({
-    //   username: 'test-user',
-    //   photo: 'photo.gif',
-    //   caption: 'a caption',
-    //   tags: ['#tags'],
-    // });
-
-    // await Comment.insert({
-    //   comment_by: 'test-user',
-    //   post: post2.id,
-    //   comment: 'a comment',
-    // });
-
-    // // const post3 = await Post.insert({
-    // //   username: 'test-user',
-    // //   photo: 'photo.gif',
-    // //   caption: 'a caption',
-    // //   tags: ['#tags'],
-    // // });
-
-    // // await Comment.insert({
-    // //   comment_by: 'test-user',
-    // //   post: post3.id,
-    // //   comment: 'a comment',
-    // // });
-
-    // // const post4 = await Post.insert({
-    // //   username: 'test-user',
-    // //   photo: 'photo.gif',
-    //   caption: 'a caption',
-    //   tags: ['#tags'],
-    // });
-
-    // await Comment.insert({
-    //   comment_by: 'test-user',
-    //   post: post4.id,
-    //   comment: 'a comment',
-    // });
-
-    // const post5 = await Post.insert({
-    //   username: 'test-user',
-    //   photo: 'photo.gif',
-    //   caption: 'a caption',
-    //   tags: ['#tags'],
-    // });
-
-    // await Comment.insert({
-    //   comment_by: 'test-user',
-    //   post: post5.id,
-    //   comment: 'a comment',
-    // });
-
-    // const post6 = await Post.insert({
-    //   username: 'test-user',
-    //   photo: 'photo.gif',
-    //   caption: 'a caption',
-    //   tags: ['#tags'],
-    // });
-
-    // await Comment.insert({
-    //   comment_by: 'test-user',
-    //   post: post6.id,
-    //   comment: 'a comment',
-    // });
-
-    // const post7 = await Post.insert({
-    //   username: 'test-user',
-    //   photo: 'photo.gif',
-    //   caption: 'a caption',
-    //   tags: ['#tags'],
-    // });
-
-    // await Comment.insert({
-    //   comment_by: 'test-user',
-    //   post: post7.id,
-    //   comment: 'a comment',
-    // });
-
-    // const post8 = await Post.insert({
-    //   username: 'test-user',
-    //   photo: 'photo.gif',
-    //   caption: 'a caption',
-    //   tags: ['#tags'],
-    // });
-
-    // await Comment.insert({
-    //   comment_by: 'test-user',
-    //   post: post8.id,
-    //   comment: 'a comment',
-    // });
-
-    // const post9 = await Post.insert({
-    //   username: 'test-user',
-    //   photo: 'photo.gif',
-    //   caption: 'a caption',
-    //   tags: ['#tags'],
-    // });
-
-    // await Comment.insert({
-    //   comment_by: 'test-user',
-    //   post: post9.id,
-    //   comment: 'a comment',
-    // });
-
-    // const post10 = await Post.insert({
-    //   username: 'test-user',
-    //   photo: 'photo.gif',
-    //   caption: 'a caption',
-    //   tags: ['#tags'],
-    // });
-
-    // await Comment.insert({
-    //   comment_by: 'test-user',
-    //   post: post10.id,
-    //   comment: 'a comment',
-    // });
-
+   
     const res = await request(app).get('/api/v1/grams/popular');
     console.log('OOOMMMGGG', res.body);
     expect(res.body).toEqual(     
@@ -342,7 +209,15 @@ describe('alchemy-app routes', () => {
         caption: 'words-here',
         photo: 'gram.png',
         tags:['#photography', '#myphotos'],
-      }]
+      },
+      // {
+      //   id: '2',
+      //   username: 'test-github',
+      //   caption: 'words-here',
+      //   photo: 'gram-2.png',
+      //   tags:['#photography', '#myphotos'],
+      // }]
+      ]
     );
   });
 });
