@@ -29,4 +29,9 @@ comment TEXT NOT NULL
 );
 
 
-INSERT INTO users (github_login, github_avatar_url) VALUES ('test-github', 'image.png')
+INSERT INTO users (github_login, github_avatar_url) 
+VALUES ('test-github', 'image.png');
+
+INSERT INTO grams (username, photo_url, caption)
+VALUES ('test-github', 'gram.png', 'words-here')
+
