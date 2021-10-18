@@ -210,14 +210,14 @@ describe('alchemy-app routes', () => {
         photo: 'gram.png',
         tags:['#photography', '#myphotos'],
       },
-      // {
-      //   id: '2',
-      //   username: 'test-github',
-      //   caption: 'words-here',
-      //   photo: 'gram-2.png',
-      //   tags:['#photography', '#myphotos'],
-      // }]
-      ]
+      {
+        id: '2',
+        username: 'test-github',
+        caption: 'words-here',
+        photo: 'gram.png',
+        tags:['#wow', '#sogood'],
+      }]
+      
     );
   });
 });
