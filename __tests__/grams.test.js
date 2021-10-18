@@ -3,8 +3,7 @@ const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
 const User = require('../lib/Models/User.js');
-const Post = require('../lib/Models/Post.js');
-const Comment = require('../lib/Models/Comment.js');
+
 
 async function saveUser() {
   const testUser = [{
@@ -23,12 +22,12 @@ async function saveUser() {
 async function savePosts() {
   const testPost = [
     {
-      photo: 'photo.jpg',
+      photo: 'photo-2.jpg',
       caption: 'sure is a photo',
-      tags: ['#photography', '#myphotos'],
+      tags: ['#hella', '#pics'],
     },
     {
-      photo: 'image.jpg',
+      photo: 'image-2.jpg',
       caption: 'sure is a image',
       tags: ['#wow', '#sogood'],
     },
@@ -197,11 +196,9 @@ describe('alchemy-app routes', () => {
     
   it('should return the 10 posts with the most comments', async () => {
     await saveUser();
-    await savePosts();
     await saveComments();
    
     const res = await request(app).get('/api/v1/grams/popular');
-    console.log('OOOMMMGGG', res.body);
     expect(res.body).toEqual(     
       [{
         id: '1',
@@ -216,8 +213,7 @@ describe('alchemy-app routes', () => {
         caption: 'words-here',
         photo: 'gram.png',
         tags:['#wow', '#sogood'],
-      }]
-      
+      }]      
     );
   });
 });
