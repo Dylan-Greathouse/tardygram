@@ -3,11 +3,27 @@ const pool = require('../lib/utils/pool.js');
 const setup = require('../data/setup.js');
 const request = require('supertest');
 const app = require('../lib/app.js');
-const User = require('../lib/Models/User.js');
+
+
+
+async function saveUser() {
+  const testUser = [{
+    username: 'test-github',
+    avatar: 'image.png'
+  }];
+  await Promise.all(
+    testUser.map(async (arr) => {
+      await request(app)
+        .get('/api/v1/auth/login/callback')
+        .send(arr);
+    })
+  );
+}
 
 async function savePosts(){
   const testPost = [{
-    photo: 'photo.jpg',
+    username: 'test-github',
+    photo: 'photo-2.jpg',
     caption: 'sure is a photo',
     tags: ['#photography', '#myphotos'],
   }];
@@ -18,23 +34,34 @@ async function savePosts(){
   );
 }
 
-const testPost = {
-  photo: 'photo.jpg',
-  caption: 'sure is a photo',
-  tags: ['#photography', '#myphotos'],
-};
+async function saveComments() {
+  const testComment = [
+    {
+      comment: '10/10',
+      post: '1',
+      username: 'test-github',
+    },
+    {
+      comment: '7/10',
+      post: '1',
+      username: 'test-github',
+    },
+  ];
+  await Promise.all(
+    testComment.map(async (arr) => {
+      await request(app).post('/api/v1/comments').send(arr);
+    })
+  );
+}
 
-const testComment = {
-  user: 'test-user',
-  post: 'original-post',
-  comment: 'commenting',
-};
+
+
 
 jest.mock('../lib/middleware/ensureAuth.js', () => {
   return (req, res, next) => {
     req.user = {
-      username: 'Dylan-Greathouse',
-      avatar: 'https://avatars.githubusercontent.com/u/20326640?v=4',
+      username: 'test-github',
+      avatar: 'image.png',
       iat: Date.now(),
       exp: Date.now(),
     };
@@ -51,32 +78,37 @@ describe('alchemy-app routes', () => {
 
 
   it('should create a comment from a user', async () => {
-    const user = await User.insert({
-      username: 'test-user',
-      avatar: 'image.png',
-    });
+    await saveUser();
+    await savePosts();
 
-    const agent = await request.agent(app);
-    await agent.get('/api/v1/auth/login').send({
-      username: 'test-user',
-      avatar: 'image.png',
-    });
-
-    const resPost = await agent
-      .post('/api/v1/grams')
-      .send({ ...testPost, username: user.id });
-    
-
-    const res = await agent
-      .post('/api/v1/grams')
-      .send({...resPost, comment: testComment.});
+    const testComment = {
+      // id: '1',
+      username: 'test-github',
+      post: '1',
+      comment: 'commenting',
+    };
+ 
+    const res = await request(app)
+      .post('/api/v1/comments')
+      .send(testComment);
 
     expect(res.body).toEqual({
-      id: '1',
-      username: 'test-user',
+      id: '2',
+      username: 'test-github',
       post: '1',
       comment: 'commenting'
     });
+  });
+
+  it('should delete comment from DB', async () => {
+    await saveUser();
+    await savePosts();
+    await saveComments();
+
+    const res = await request(app)
+      .delete('/api/v1/comments/1');
+
+    expect(res.body).toEqual({});
   });
 
   afterAll(() => {
